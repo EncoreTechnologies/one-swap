@@ -788,9 +788,9 @@ _EOF_"
         else
             # Perhaps have a separet function that does a bit more....stuff...
             print 'Injecting one-context...'
-            cmd_stdout, status = run_cmd_report(injector_cmd, true)
+            _stdout, status = run_cmd_report(injector_cmd, true)
             if !status.success?
-                puts 'Context injection command appears to have failed. Error: ' + cmd_stdout.to_s
+                puts 'Context injection command appears to have failed.'
             end
         end
 
