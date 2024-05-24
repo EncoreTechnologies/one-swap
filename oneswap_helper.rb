@@ -629,8 +629,8 @@ class OneSwapHelper < OpenNebulaHelper::OneHelper
             context_basename = File.basename(context_fullpath)
             cmd = 'virt-customize -q'\
                   " -a #{disk}"\
-                  " --copy-in #{context_fullpath}:/Temp"\
-                  " --firstboot-command 'msiexec -i c:\\Temp\\#{context_basename} /quiet && powershell -executionpolicy bypass -File \"C:\\Program Files (x86)\\Encore\\one-context-network\\one_context_networking_reset.ps1\" && del c:\\Temp\\#{context_basename}'"
+                  " --copy-in #{context_fullpath}:/"\
+                  " --firstboot-command 'msiexec -i c:\\#{context_basename} /quiet && powershell -executionpolicy bypass -File \"C:\\Program Files (x86)\\Encore\\one-context-network\\one_context_networking_reset.ps1\" && del c:\\#{context_basename}'"
         else
             # os gives versions, so check that instead of distro
             if osinfo['os'].start_with?('redhat-based') ||  osinfo['os'].start_with?('rhel')
@@ -788,9 +788,9 @@ _EOF_"
         else
             # Perhaps have a separet function that does a bit more....stuff...
             print 'Injecting one-context...'
-            _stdout, status = run_cmd_report(injector_cmd, true)
+            cmd_stdout, status = run_cmd_report(injector_cmd, true)
             if !status.success?
-                puts 'Context injection command appears to have failed.'
+                puts 'Context injection command appears to have failed. Error: ' + cmd_stdout.to_s
             end
         end
 
