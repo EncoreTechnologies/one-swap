@@ -617,7 +617,9 @@ class OneSwapHelper < OpenNebulaHelper::OneHelper
             latest = c_files.max_by { |f| Gem::Version.new(f.match(/(\d+\.\d+\.\d+)\.msi$/)[1])}
             latest
         else
-            # download the correct one
+            puts "No context package for distro: #{distro} found in path:  #{@options[:context_path]}"
+            # This 'return false' will cause a bug and fail with ERR:
+            # 'no implicit conversion of false into String'
             return false
         end
     end
